@@ -1,17 +1,21 @@
-"use strict";
+import util from "../util.js";
+import tooltipButton from "./TooltipButton.js";
 
-Vue.component("save-file", {
+export default {
+    components: {
+        tooltipButton
+    },
     props: {
         saveFile: Object
     },
     methods: {
         copyText() {
-            copyText(this.saveFile.data);
+            util.copyText(this.saveFile.data);
         },
         exportFile() {
-            let filename = this.saveFile.name + ".txt";
-            let text = this.saveFile.data;
-            download(filename, text);
+            const filename = `${this.saveFile.name}.txt`;
+            const text = this.saveFile.data;
+            util.download(filename, text);
         }
     },
     template: `
@@ -31,4 +35,4 @@ Vue.component("save-file", {
         </div>
     </div>
     `
-})
+};

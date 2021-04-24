@@ -1,6 +1,4 @@
-"use strict";
-
-Vue.component("top-bar", {
+export default {
     props: {
         version: String
     },
@@ -19,4 +17,4 @@ Vue.component("top-bar", {
         </div>
     </header>
     `
-})
+};

@@ -1,17 +1,22 @@
-"use strict";
+import tabHeader from "./TabHeader.js";
+import saveFile from "./SaveFile.js";
 
-Vue.component("saves-tab", {
+export default {
+    components: {
+        tabHeader,
+        saveFile
+    },
     data() {
         return {
             sortTypes: ["Early to late", "Late to early"],
             sortMode: 0
-        }
+        };
     },
     props: {
         selectedCategory: {
             type: Object,
             default() {
-                return {}
+                return {};
             }
         }
     },
@@ -20,10 +25,11 @@ Vue.component("saves-tab", {
             return this.saves.length !== 0;
         },
         saves() {
-            let saves = this.selectedCategory.saves || [];
+            const saves = this.selectedCategory.saves || [];
             switch (this.sortMode) {
-                case 0: return saves;
-                case 1: return [...saves].reverse();
+            case 0: return saves;
+            case 1: return [...saves].reverse();
+            default: return [];
             }
         }
     },
@@ -60,4 +66,4 @@ Vue.component("saves-tab", {
         </save-file>
     </div>
     `
-})
+};

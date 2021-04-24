@@ -1,19 +1,26 @@
-"use strict";
+import util from "../util.js";
+import confirmationModal from "./ConfirmationModal.js";
 
-Vue.component("settings-tab", {
+export default {
+    component: {
+        confirmationModal
+    },
     data() {
         return {
-            themes,
+            themes: ["Dark", "Light"],
             showWipeDataModal: false
         }
     },
     methods: {
+        hasCustomSaves() {
+            return this.data.customSaves.length !== 0;
+        },
         switchTheme() {
-            this.settings.theme ++;
-            if (this.settings.theme >= themes.length) {
-                this.settings.theme = 0;
+            this.data.settings.theme ++;
+            if (this.data.settings.theme >= themes.length) {
+                this.data.settings.theme = 0;
             }
-            setTheme(this.settings.theme);
+            util.setTheme(this.data.settings.theme);
         },
         reset() {
             localStorage.removeItem("saveBankData");
@@ -21,14 +28,18 @@ Vue.component("settings-tab", {
         }
     },
     props: {
-        settings: Object
+        data: Object
     },
     template: `
     <div class="tab settings-tab">
         <tab-header title="Settings"/>
 
         <button @click="switchTheme">
-            Theme: {{themes[settings.theme]}}
+            Theme: {{themes[data.settings.theme]}}
+        </button>
+
+        <button v-if="hasCustomSaves" @click="$emit('zip-save')">
+            (Legacy) Export custom saves
         </button>
 
         <button class="warning" @click="showWipeDataModal = true">
@@ -44,4 +55,4 @@ Vue.component("settings-tab", {
         </confirmation-modal>
     </div>
     `
-})
+};
